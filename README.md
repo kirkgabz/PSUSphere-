@@ -12,4 +12,4 @@ PSUSphere is a Django-based web application designed to manage university-relate
 
 ##  Authors
 - Sunny Boy Oregela
-- KIKirk John Gabo
+- Kirk John Gabo
