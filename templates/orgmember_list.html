@@ -1,0 +1,57 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div class="content">
+  <div class="container-fluid">
+    <h4 class="page-title">Org Members</h4>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          
+          <div class="card-header">
+            <div class="card-title">List of Org Members</div>
+            <div class="card-category">Page Subtitle</div>
+          </div>
+          
+          <div class="card-body">
+            
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div style="width: 300px;">
+                <input type="text" class="form-control" placeholder="Search ...">
+              </div>
+              <a href="{% url 'orgmember-add' %}" class="btn btn-success btn-rounded">Add Org Member</a>
+            </div>
+
+            <table class="table table-striped mt-3">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Organization</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for object in object_list %}
+                <tr>
+                  <td>{{ object.student }}</td>
+                  <td>{{ object.organization }}</td>
+                  <td>
+                    <a href="{{ object.id }}/">Edit</a>
+                    <a href="{{ object.id }}/delete/" class="text-danger">Delete</a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;">No Records Found</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            {% include 'includes/pagination.html' %}
+          </div>
+        </div> </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
