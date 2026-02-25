@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.urls import path
 
-from studentorg import views
 from studentorg.views import (
     HomePageView,
     OrganizationList,
     OrganizationCreateView,
     OrganizationUpdateView,
+    OrganizationDeleteView, 
 )
 
 urlpatterns = [
@@ -30,5 +30,11 @@ urlpatterns = [
         "organization_list/<pk>/",
         OrganizationUpdateView.as_view(),
         name="organization-update",
+    ),
+
+    path(
+        "organization_list/<pk>/delete/",
+        OrganizationDeleteView.as_view(),
+        name="organization-delete",
     ),
 ]
