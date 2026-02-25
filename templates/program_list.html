@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+<div class="content">
+  <div class="container-fluid">
+    <h4 class="page-title">Programs</h4>
+
+    <div class="pull-right">
+      <a href="{% url 'program-add' %}" class="btn btn-success btn-rounded">Add Program</a>
+    </div>
+
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Record</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <td>{{ object }}</td>
+          <td>
+            <a href="{{ object.id }}/">Edit</a>
+            <a href="{{ object.id }}/delete/" class="text-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2" style="text-align:center;">No Records Found</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% include 'includes/pagination.html' %}
+  </div>
+</div>
+{% endblock %}
