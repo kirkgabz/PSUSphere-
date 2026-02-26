@@ -1,23 +1,71 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
 <div class="content">
   <div class="container-fluid">
-    <h4 class="page-title">Home</h4>
+    <h4 class="page-title">PSUSphere Dashboard</h4>
+
+    <div class="row mb-4">
+      
+      <div class="col-sm-6 col-md">
+        <div class="card h-100 mb-2">
+          <div class="card-body">
+            <div style="color: #888; font-size: 0.85rem; margin-bottom: 0.5rem;">Colleges</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #333;">{{ college_count }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md">
+        <div class="card h-100 mb-2">
+          <div class="card-body">
+            <div style="color: #888; font-size: 0.85rem; margin-bottom: 0.5rem;">Programs</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #333;">{{ program_count }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md">
+        <div class="card h-100 mb-2">
+          <div class="card-body">
+            <div style="color: #888; font-size: 0.85rem; margin-bottom: 0.5rem;">Organizations</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #333;">{{ organization_count }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md">
+        <div class="card h-100 mb-2">
+          <div class="card-body">
+            <div style="color: #888; font-size: 0.85rem; margin-bottom: 0.5rem;">Students</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #333;">{{ student_count }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md">
+        <div class="card h-100 mb-2">
+          <div class="card-body">
+            <div style="color: #888; font-size: 0.85rem; margin-bottom: 0.5rem;">Org Members</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #333;">{{ org_member_count }}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Organizations</div>
+            <div class="card-title">Recent Organizations</div>
             <div class="card-category">Page Subtitle</div>
           </div>
 
           <div class="card-body">
-
             {% if home %}
               <ul class="list-group">
                 {% for org in home %}
@@ -29,7 +77,6 @@
             {% else %}
               <p>No organizations yet.</p>
             {% endif %}
-
           </div>
         </div>
       </div>

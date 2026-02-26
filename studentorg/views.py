@@ -20,6 +20,17 @@ class HomePageView(ListView):
     context_object_name = "home"
     template_name = "home.html"
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in our custom summary counts
+        context['college_count'] = College.objects.count()
+        context['program_count'] = Program.objects.count()
+        context['organization_count'] = Organization.objects.count()
+        context['student_count'] = Student.objects.count()
+        context['org_member_count'] = OrgMember.objects.count()
+        return context
+
 
 # =========================
 # ORGANIZATION
