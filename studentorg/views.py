@@ -1,3 +1,5 @@
+from django.db.models import Q
+from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -21,14 +23,26 @@ class HomePageView(ListView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in our custom summary counts
+        
         context['college_count'] = College.objects.count()
         context['program_count'] = Program.objects.count()
         context['organization_count'] = Organization.objects.count()
         context['student_count'] = Student.objects.count()
         context['org_member_count'] = OrgMember.objects.count()
+        context["total_students"] = Student.objects.count()
+        
+        today = timezone.now().date()
+        count = (
+            OrgMember.objects.filter(
+                date_joined__year=today.year
+            )
+            .values("student")
+            .distinct()
+            .count()
+        )
+        context["students_joined_this_year"] = count
+        
         return context
 
 
@@ -40,7 +54,18 @@ class OrganizationList(ListView):
     context_object_name = "organization"
     template_name = "org_list.html"
     paginate_by = 5
+    ordering = ["college__college_name", "name"] # Merged from your first block
 
+    def get_queryset(self): # Merged from your bottom block
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        
+        if query:
+            qs = qs.filter(
+                Q(name__icontains=query) |
+                Q(description__icontains=query)
+            )
+        return qs
 
 class OrganizationCreateView(CreateView):
     model = Organization
@@ -69,7 +94,24 @@ class OrgMemberList(ListView):
     model = OrgMember
     template_name = "orgmember_list.html"
     paginate_by = 5
-
+    
+    def get_ordering(self):
+        allowed = ["student__lastname", "date_joined"]
+        sort_by = self.request.GET.get("sort_by")
+        if sort_by in allowed:
+            return sort_by
+        return "student__lastname"
+        
+    def get_queryset(self): # Added missing search for Task 1
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(student__firstname__icontains=query) |
+                Q(student__lastname__icontains=query) |
+                Q(organization__name__icontains=query)
+            )
+        return qs
 
 class OrgMemberCreateView(CreateView):
     model = OrgMember
@@ -98,6 +140,16 @@ class StudentList(ListView):
     model = Student
     template_name = "student_list.html"
     paginate_by = 5
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(firstname__icontains=query) |
+                Q(lastname__icontains=query)
+            )
+        return qs
 
 
 class StudentCreateView(CreateView):
@@ -127,6 +179,13 @@ class CollegeList(ListView):
     model = College
     template_name = "college_list.html"
     paginate_by = 5
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(Q(college_name__icontains=query))
+        return qs
 
 
 class CollegeCreateView(CreateView):
@@ -156,6 +215,20 @@ class ProgramList(ListView):
     model = Program
     template_name = "program_list.html"
     paginate_by = 5
+    
+    def get_ordering(self):
+        allowed = ["prog_name", "college__college_name"]
+        sort_by = self.request.GET.get("sort_by")
+        if sort_by in allowed:
+            return sort_by
+        return "prog_name"
+
+    def get_queryset(self): # Added missing search for Task 1
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(Q(prog_name__icontains=query))
+        return qs
 
 
 class ProgramCreateView(CreateView):
