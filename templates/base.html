@@ -15,7 +15,7 @@
         <div class="main-header">
             <div class="logo-header">
                 <a href="{% url 'home' %}" class="logo">
-                    Ready Dashboard
+                    PSUSphere
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -106,14 +106,14 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <img src="{% static 'img/profile.jpg' %}" alt="user-img" width="36" class="img-circle">
-                                <span><span>{{ request.user.username }}</span></span>
+                                <span>{{ request.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li>
                                     <div class="user-box">
                                         <div class="u-img"><img src="{% static 'img/profile.jpg' %}" alt="user"></div>
                                         <div class="u-text">
-                                            <h4>Hizrian</h4>
+                                            <h4><span>{{ request.user.username }}</span></h4>
                                             <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                     <div class="info">
                         <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                             <span>
-                                Hizrian
+                                {{ request.user.username }}
                                 <span class="user-level">Administrator</span>
                                 <span class="caret"></span>
                             </span>
@@ -183,7 +183,6 @@
                         </a>
                     </li>
 
-                    <!-- CHANGED: Org. Members -->
                     <li class="nav-item">
                         <a href="{% url 'orgmember-list' %}">
                             <i class="la la-keyboard-o"></i>
@@ -191,7 +190,6 @@
                         </a>
                     </li>
 
-                    <!-- CHANGED: Student -->
                     <li class="nav-item">
                         <a href="{% url 'student-list' %}">
                             <i class="la la-th"></i>
@@ -199,7 +197,6 @@
                         </a>
                     </li>
 
-                    <!-- CHANGED: College -->
                     <li class="nav-item">
                         <a href="{% url 'college-list' %}">
                             <i class="la la-bell"></i>
@@ -207,7 +204,6 @@
                         </a>
                     </li>
 
-                    <!-- CHANGED: Program -->
                     <li class="nav-item">
                         <a href="{% url 'program-list' %}">
                             <i class="la la-font"></i>
