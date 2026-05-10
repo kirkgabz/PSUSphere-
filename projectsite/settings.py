@@ -1,5 +1,5 @@
 import os
-import socket # Added based on PDF instructions
+import socket 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -12,11 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_pt@-$tn25v-zoyp$sz5w9d+$pv1v7&l)*8-!@!t6_!8&z0p#2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = ['psusphere.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = os.environ.get(
+    'DJANGO_ALLOWED_HOSTS',
+    '127.0.0.1 localhost psusphere.pythonanywhere.com'
+).split()
 
-# Dynamic SITE_ID configuration based on deployment environment
 if "pythonanywhere" in socket.gethostname():
     SITE_ID = 2 # production site (psusphere.pythonanywhere.com)
 else:
